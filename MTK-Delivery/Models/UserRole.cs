@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace MTK_Delivery.Models
+{
+    public class UserRole
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
+        public int id { get; set; }
+         [Required]
+        [StringLength(50)]
+        public string userId { get; set; }
+         [StringLength(500)]
+        public string remark { get; set; }
+        public int funId { get; set; }
+        [ForeignKey("funId")]
+        public virtual functionality functionality { get; set; }
+    }
+}
