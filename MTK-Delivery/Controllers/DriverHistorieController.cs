@@ -22,32 +22,31 @@ namespace MTK_Delivery.Controllers
 
         // GET: DriverHistorie
         [HttpGet]
-        public JsonResult Get()
+        public async Task<IActionResult> Get()
         {
-            var dataContext = _context.driverHistories;
-            return new JsonResult(dataContext);
+            return Json(await _context.driverHistories.ToArrayAsync());
         }
         [HttpPost]
-        public JsonResult Post(DriverHistory driverHistory)
+        public async Task<IActionResult> Post(DriverHistory driverHistory)
         {
             _context.Add(driverHistory);
-            _context.SaveChangesAsync();
+          await  _context.SaveChangesAsync();
             return new JsonResult("Added Successfully");
         }
 
         [HttpPut]
-        public JsonResult Put(DriverHistory driver)
+        public async Task<IActionResult> Put(DriverHistory driver)
         {
             _context.Update(driver);
-            _context.SaveChangesAsync();
+         await   _context.SaveChangesAsync();
             return new JsonResult("Updated Successfully");
         }
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             DriverHistory res = _context.driverHistories.SingleOrDefault(X => X.id == id);
             _context.driverHistories.Remove(res);
-            _context.SaveChangesAsync();
+          await  _context.SaveChangesAsync();
             return new JsonResult("delete Successfully");
         }
     }

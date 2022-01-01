@@ -22,37 +22,36 @@ namespace MTK_Delivery.Controllers
 
         // GET: Vehicle
         [HttpGet]
-        public JsonResult Get()
+        public async Task<IActionResult> Get()
         {
-            var dataContext = _context.vehicles;
-            return new JsonResult(dataContext);
+            return  Json(await _context.vehicles.ToArrayAsync());
         }
         [HttpPost]
-        public JsonResult Post(Vehicle vehicle)
+        public async Task<IActionResult> Post(Vehicle vehicle)
         {
             if (vehicle.id == 0)
             {
                 _context.Add(vehicle);
-                _context.SaveChangesAsync();
+            await    _context.SaveChangesAsync();
             }
             _context.Add(vehicle);
-            _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
             return new JsonResult("Added Successfully");
         }
 
         [HttpPut]
-        public JsonResult Put(Vehicle vehicle)
+        public async Task<IActionResult> Put(Vehicle vehicle)
         {
             _context.Update(vehicle);
-            _context.SaveChangesAsync();
+          await  _context.SaveChangesAsync();
             return new JsonResult("Updated Successfully");
         }
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             Vehicle vehicle = _context.vehicles.SingleOrDefault(X => X.id == id);
             _context.vehicles.Remove(vehicle);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return new JsonResult("delete Successfully");
         }
     }

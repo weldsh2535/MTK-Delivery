@@ -22,32 +22,31 @@ namespace MTK_Delivery.Controllers
 
         // GET: Categorie
         [HttpGet]
-        public JsonResult Get()
+        public async Task<IActionResult> Get()
         {
-            var dataContext = _context.categories;
-            return new JsonResult(dataContext);
+            return Json(await _context.categories.ToArrayAsync());
         }
         [HttpPost]
-        public JsonResult Post(Category category)
+        public async Task<IActionResult> Post(Category category)
         {
             _context.Add(category);
-            _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
             return new JsonResult("Added Successfully");
         }
        
         [HttpPut]
-        public JsonResult Put(Category category)
+        public async Task<IActionResult> Put(Category category)
         {
             _context.Update(category);
-            _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
             return new JsonResult("Updated Successfully");
         }
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             Category category1 = _context.categories.SingleOrDefault(X => X.id == id);
             _context.categories.Remove(category1);
-            _context.SaveChangesAsync();
+          await _context.SaveChangesAsync();
             return new JsonResult("delete Successfully");
         }
         

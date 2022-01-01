@@ -15,39 +15,38 @@ namespace MTK_Delivery.Controllers
     {
         private readonly dataContext _context;
 
-        public OrderStatusController(dataContext contcext)
+        public OrderStatusController(dataContext context)
         {
-            _context = contcext;
+            _context = context;
         }
 
         // GET: OrderStatus
         [HttpGet]
-        public JsonResult Get()
+        public async Task<IActionResult> Get()
         {
-            var dataContext = _context.orderStatuses;
-            return new JsonResult(dataContext);
+            return  Json(await _context.orderStatuses.ToArrayAsync());
         }
         [HttpPost]
-        public JsonResult Post(OrderStatus orderStatus)
+        public async Task<IActionResult> Post(OrderStatus orderStatus)
         {
             _context.Add(orderStatus);
-            _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
             return new JsonResult("Added Successfully");
         }
 
         [HttpPut]
-        public JsonResult Put(OrderStatus orderStatus)
+        public async Task<IActionResult> Put(OrderStatus orderStatus)
         {
             _context.Update(orderStatus);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return new JsonResult("Updated Successfully");
         }
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             OrderStatus res = _context.orderStatuses.SingleOrDefault(X => X.id == id);
             _context.orderStatuses.Remove(res);
-            _context.SaveChangesAsync();
+           await  _context.SaveChangesAsync();
             return new JsonResult("delete Successfully");
         }
     }

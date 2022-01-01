@@ -22,32 +22,31 @@ namespace MTK_Delivery.Controllers
 
         // GET: Restaurant
         [HttpGet]
-        public JsonResult Get()
+        public async Task<IActionResult> Get()
         {
-            var dataContext = _context.restaurants;
-            return new JsonResult(dataContext);
+            return  Json(await _context.restaurants.ToArrayAsync());
         }
         [HttpPost]
-        public JsonResult Post(Restaurant restaurant)
+        public async Task<IActionResult> Post(Restaurant restaurant)
         {
             _context.Add(restaurant);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return new JsonResult("Added Successfully");
         }
 
         [HttpPut]
-        public JsonResult Put(Restaurant restaurant)
+        public async Task<IActionResult> Put(Restaurant restaurant)
         {
             _context.Update(restaurant);
-            _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
             return new JsonResult("Updated Successfully");
         }
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             Restaurant res = _context.restaurants.SingleOrDefault(X => X.id == id);
             _context.restaurants.Remove(res);
-            _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
             return new JsonResult("delete Successfully");
         }
     }

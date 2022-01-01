@@ -32,6 +32,8 @@ namespace MTK_Delivery.Models
         [Required]
         [StringLength(50)]
         public string type { get; set; }
+        [StringLength(500000000)]
+        public string photo { get; set; }
         internal string _LocationId { get; set; }
         [NotMapped]
         public Location LocationId

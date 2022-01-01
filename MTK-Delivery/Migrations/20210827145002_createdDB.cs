@@ -19,6 +19,7 @@ namespace MTK_Delivery.Migrations
                     FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     active = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    photo = table.Column<string>(type: "nvarchar(max)", maxLength: 500000000, nullable: false),
                     LocationId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -81,6 +82,7 @@ namespace MTK_Delivery.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RestaurantId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeliveryTime = table.Column<DateTime>(type:"datetime2",nullable: true),
                     Customer = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Total = table.Column<int>(type: "int", nullable: false),
                     Driver = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),

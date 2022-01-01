@@ -24,7 +24,6 @@ namespace MTK_Delivery
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllersWithViews();
             services.AddDbContext<dataContext>
            (o => o.UseSqlServer(Configuration.
@@ -39,6 +38,7 @@ namespace MTK_Delivery
             app.UseCors(options =>
             options.WithOrigins("http://localhost:8100")
             .AllowAnyMethod().AllowAnyHeader());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

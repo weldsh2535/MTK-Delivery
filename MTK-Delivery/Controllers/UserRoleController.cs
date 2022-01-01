@@ -22,38 +22,36 @@ namespace MTK_Delivery.Controllers
 
         // GET: UserRole
         [HttpGet]
-        public JsonResult Get()
+        public async Task<IActionResult> Get()
         {
-            var dataContext = _context.userRoles;
-            return new JsonResult(dataContext);
+            return  Json(await _context.userRoles.ToArrayAsync());
         }
         [HttpGet("{userId}")]
-        public JsonResult Get(string userId)
+        public async Task<IActionResult> Get(string userId)
         {
-            var res = _context.userRoles.FindAsync(userId);
-           return new JsonResult(res);
+           return  Json(await _context.userRoles.FindAsync(userId));
         }
         [HttpPost]
-        public JsonResult Post(UserRole user)
+        public async Task<IActionResult> Post(UserRole user)
         {
             _context.Add(user);
-            _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
             return new JsonResult("Added Successfully");
         }
 
         [HttpPut]
-        public JsonResult Put(UserRole user)
+        public async Task<IActionResult> Put(UserRole user)
         {
             _context.Update(user);
-            _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
             return new JsonResult("Updated Successfully");
         }
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             UserRole res = _context.userRoles.SingleOrDefault(X => X.id == id);
             _context.userRoles.Remove(res);
-            _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
             return new JsonResult("delete Successfully");
         }
     }

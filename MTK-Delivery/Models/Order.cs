@@ -17,6 +17,7 @@ namespace MTK_Delivery.Models
         public string RestaurantId { get; set; }
         [Required]
         public DateTime DateTime { get; set; }
+        public DateTime DeliveryTime { get; set; }
         [Required]
         public string Customer { get; set; }
         [Required]

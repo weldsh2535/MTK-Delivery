@@ -60,6 +60,10 @@ namespace MTK_Delivery.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("photo")
+                        .HasMaxLength(500000000)
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("id");
 
                     b.ToTable("accounts");
@@ -115,7 +119,7 @@ namespace MTK_Delivery.Migrations
 
                     b.Property<string>("photo")
                         .IsRequired()
-                        .HasMaxLength(50000)
+                        .HasMaxLength(500000000)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("vehicleId")
@@ -290,6 +294,9 @@ namespace MTK_Delivery.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeliveryTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Driver")

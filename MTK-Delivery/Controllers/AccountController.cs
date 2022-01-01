@@ -27,41 +27,31 @@ namespace MTK_Delivery.Controllers
 
         // GET: Account
         [HttpGet]
-        public JsonResult Get()
+        public async Task<IActionResult> Get()
         {
-            var dataContext = _context.accounts;
-            //foreach(var item in dataContext)
-            //{
-            //   var owner= item._Owner;
-            //    return new JsonResult(owner);
-            //}
-            //var result = JsonConvert.SerializeObject(dataContext);
-            //var status = _context.statuses; 
-            //var test = JsonConvert.DeserializeObject<List<Account>>(result);
-            return new JsonResult(dataContext);
+            return Json(await _context.accounts.ToArrayAsync());
         }
         [HttpPost]
-        public JsonResult Post(Account account)
+        public async Task<IActionResult> Post(Account account)
         {
             _context.Add(account);
-            _context.SaveChangesAsync();
-           // ViewData["LocationId"] = new SelectList(_context.locations, "id", "id", account.LocationId);
-         return new JsonResult("Added Successfully");
+         await _context.SaveChangesAsync();
+          return new JsonResult("Added Successfully");
         }
         [HttpPut]
-        public  JsonResult Put(Account account)
+        public async Task<IActionResult> Put(Account account)
         {
             _context.Update(account);
-             _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return new JsonResult("Updated Successfully");
         }
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var acc = _context.accounts.FindAsync(id);
             Account account1 = _context.accounts.SingleOrDefault(X=>X.id==id);
                 _context.accounts.Remove(account1);
-                _context.SaveChangesAsync();
+             await   _context.SaveChangesAsync();
             return new JsonResult("delete Successfully");
         }
        

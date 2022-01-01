@@ -22,24 +22,23 @@ namespace MTK_Delivery.Controllers
 
         // GET: Status
         [HttpGet]
-        public JsonResult Get()
+        public async Task<IActionResult> Get()
         {
-            var dataContext = _context.statuses;
-            return new JsonResult(dataContext);
+            return Json(await _context.statuses.ToListAsync());
         }
         [HttpPost]
-        public JsonResult Post(Status status)
+        public async Task<IActionResult> Post(Status status)
         {
             _context.Add(status);
-            _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
             return new JsonResult("Added Successfully");
         }
 
         [HttpPut]
-        public JsonResult Put(Status status)
+        public async Task<IActionResult> Put(Status status)
         {
             _context.Update(status);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return new JsonResult("Updated Successfully");
         }
         [HttpDelete("{id}")]

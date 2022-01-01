@@ -22,32 +22,31 @@ namespace MTK_Delivery.Controllers
 
         // GET: functionalitie
         [HttpGet]
-        public JsonResult Get()
+        public async Task<IActionResult> Get()
         {
-            var dataContext = _context.functionalities;
-            return new JsonResult(dataContext);
+            return  Json(await _context.functionalities.ToArrayAsync());
         }
         [HttpPost]
-        public JsonResult Post(functionality fun)
+        public async Task<IActionResult> Post(functionality fun)
         {
             _context.Add(fun);
-            _context.SaveChangesAsync();
+          await  _context.SaveChangesAsync();
             return new JsonResult("Added Successfully");
         }
 
         [HttpPut]
-        public JsonResult Put(functionality fun)
+        public async Task<IActionResult> Put(functionality fun)
         {
             _context.Update(fun);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return new JsonResult("Updated Successfully");
         }
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             functionality res = _context.functionalities.SingleOrDefault(X => X.id == id);
             _context.functionalities.Remove(res);
-            _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
             return new JsonResult("delete Successfully");
         }
     }

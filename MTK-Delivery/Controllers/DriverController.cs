@@ -22,32 +22,31 @@ namespace MTK_Delivery.Controllers
 
         // GET: Driver
         [HttpGet]
-        public JsonResult Get()
+        public async Task<IActionResult> Get()
         {
-            var dataContext = _context.drivers;
-            return new JsonResult(dataContext);
+            return  Json(await _context.drivers.ToArrayAsync());
         }
         [HttpPost]
-        public JsonResult Post(Driver driver)
+        public async Task<IActionResult> Post(Driver driver)
         {
             _context.Add(driver);
-            _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
             return new JsonResult("Added Successfully");
         }
 
         [HttpPut]
-        public JsonResult Put(Driver driver)
+        public async Task<IActionResult> Put(Driver driver)
         {
             _context.Update(driver);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return new JsonResult("Updated Successfully");
         }
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             Driver driver = _context.drivers.SingleOrDefault(X => X.id == id);
             _context.drivers.Remove(driver);
-            _context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
             return new JsonResult("delete Successfully");
         }
     }
