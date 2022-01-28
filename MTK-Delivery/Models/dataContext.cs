@@ -28,7 +28,8 @@ namespace MTK_Delivery.Models
         public DbSet<RestaurantStatus> restaurantStatuses { get; set; }
         public DbSet<OrderStatus> orderStatuses { get; set; }
         public DbSet<Status> statuses { get; set; }
-       
+        public DbSet<Cart> carts { get; set; }
+        public DbSet<Cart_Item> cart_Items { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Account>()

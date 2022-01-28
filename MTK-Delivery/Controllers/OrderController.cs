@@ -12,7 +12,6 @@ namespace MTK_Delivery.Controllers
     public class OrderController : Controller
     {
         private readonly dataContext _context;
-        private DateTime currentDate = new DateTime();
         public OrderController(dataContext context)
         {
             _context = context;

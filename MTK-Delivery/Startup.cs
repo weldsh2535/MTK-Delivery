@@ -36,7 +36,7 @@ namespace MTK_Delivery
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,dataContext db)
         {
             app.UseCors(options =>
-            options.WithOrigins("http://localhost:8100")
+            options.WithOrigins("http://hdclient.mtksolutions.com", "http://localhost:8100", "http://localhost")
             .AllowAnyMethod().AllowAnyHeader());
 
             if (env.IsDevelopment())

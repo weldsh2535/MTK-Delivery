@@ -95,6 +95,54 @@ namespace MTK_Delivery.Migrations
                 {
                     table.PrimaryKey("PK_orders", x => x.id);
                 });
+            migrationBuilder.CreateTable(
+              name: "carts",
+              columns: table => new
+              {
+                  id = table.Column<int>(type: "int", nullable: false)
+                      .Annotation("SqlServer:Identity", "1, 1"),
+                  userId = table.Column<int>(type: "int", nullable: false),
+                  restaurantId = table.Column<string>(type:"string",nullable:false),
+                  createdAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                  updatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                  content = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+              },
+              constraints: table =>
+              {
+                  table.PrimaryKey("PK_carts", x => x.id);
+              });
+
+            migrationBuilder.CreateTable(
+              name: "cart_items",
+              columns: table => new
+              {
+                  id = table.Column<int>(type: "int", nullable: false)
+                      .Annotation("SqlServer:Identity", "1, 1"),
+                  cartId = table.Column<int>(type: "int", nullable: false),
+                  foodId = table.Column<int>(type: "int", nullable: false),
+                  price = table.Column<int>(type: "int", nullable: false),
+                  quantity = table.Column<int>(type: "int", nullable: false),
+                  discount = table.Column<int>(type: "int", nullable: false),
+                  createdAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                  updatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                  content = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+              },
+              constraints: table =>
+              {
+                  table.PrimaryKey("PK_carts", x => x.id);
+                  table.ForeignKey(
+                  name: "FK_cart_items_carts_cartId",
+                  column: x => x.cartId,
+                  principalTable: "carts",
+                  principalColumn: "id",
+                  onDelete: ReferentialAction.Cascade);
+                  table.ForeignKey(
+                  name: "FK_cart_items_foods_foodId",
+                  column: x => x.foodId,
+                  principalTable: "foods",
+                  principalColumn: "id",
+                  onDelete: ReferentialAction.Cascade);
+              });
 
             migrationBuilder.CreateTable(
                 name: "restaurants",
@@ -396,6 +444,16 @@ namespace MTK_Delivery.Migrations
                 name: "IX_userRoles_funId",
                 table: "userRoles",
                 column: "funId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_carts_cartId",
+                table: "carts",
+                column: "cartId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cart_items_cart_itemId",
+                table: "cart_items",
+                column: "cartItemId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -447,6 +505,10 @@ namespace MTK_Delivery.Migrations
 
             migrationBuilder.DropTable(
                 name: "categories");
+            migrationBuilder.DropTable(
+                name: "carts");
+            migrationBuilder.DropTable(
+                name: "cart_items");
         }
     }
 }
