@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MTK_Delivery.Models;
 using System;
@@ -7,13 +8,16 @@ using System.Threading.Tasks;
 
 namespace MTK_Delivery.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrderController : Controller
     {
         private readonly dataContext _context;
-        public OrderController(dataContext context)
+        private readonly IJwtAuthenticationManager jwtAuthenticationManager;
+        public OrderController(dataContext context , IJwtAuthenticationManager jwtAuthenticationManager)
         {
+            this.jwtAuthenticationManager = jwtAuthenticationManager;
             _context = context;
         }
         //GET:order

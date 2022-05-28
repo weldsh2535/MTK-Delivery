@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,14 +10,16 @@ using MTK_Delivery.Models;
 
 namespace MTK_Delivery.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FoodContentController : Controller
     {
         private readonly dataContext _context;
-
-        public FoodContentController(dataContext context)
+        private readonly IJwtAuthenticationManager jwtAuthenticationManager;
+        public FoodContentController(dataContext context , IJwtAuthenticationManager jwtAuthenticationManager)
         {
+            this.jwtAuthenticationManager = jwtAuthenticationManager;
             _context = context;
         }
 

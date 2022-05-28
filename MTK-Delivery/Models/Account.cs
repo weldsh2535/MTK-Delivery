@@ -14,7 +14,6 @@ namespace MTK_Delivery.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
         public int id { get; set; }
-        [Required]
         [StringLength(50)]
         public string email { get; set; }
         [Required]
@@ -23,13 +22,10 @@ namespace MTK_Delivery.Models
         [Required]
         [StringLength(50)]
         public string password { get; set; }
-        [Required]
         [StringLength(50)]
         public string FullName { get; set; }
-        [Required]
         [StringLength(50)]
         public string active { get; set; }
-        [Required]
         [StringLength(50)]
         public string type { get; set; }
         [StringLength(500000000)]

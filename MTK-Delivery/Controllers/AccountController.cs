@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
@@ -13,16 +14,17 @@ using Newtonsoft.Json;
 
 namespace MTK_Delivery.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : Controller
     {
         private readonly dataContext _context;
-        private readonly IConfiguration _configuration;
-        public AccountController(dataContext context,IConfiguration configuration)
+        private readonly IJwtAuthenticationManager jwtAuthenticationManager;
+        public AccountController(dataContext context, IJwtAuthenticationManager jwtAuthenticationManager)
         {
+            this.jwtAuthenticationManager = jwtAuthenticationManager;
             _context = context;
-            _configuration = configuration;
         }
 
         // GET: Account
@@ -31,6 +33,17 @@ namespace MTK_Delivery.Controllers
         {
             return Json(await _context.accounts.ToArrayAsync());
         }
+
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public async Task<IActionResult> Authenticate(Account users)
+        {
+            var token = jwtAuthenticationManager.Authenticate(users.phonenumber, users.password);
+            if (token == null)
+                return Unauthorized();
+            return Json(token);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post(Account account)
         {

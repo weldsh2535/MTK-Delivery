@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
@@ -13,14 +14,17 @@ using Newtonsoft.Json;
 
 namespace MTK_Delivery.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CartItemController : Controller
     {
         private readonly dataContext _context;
         private readonly IConfiguration _configuration;
-        public CartItemController(dataContext context, IConfiguration configuration)
+        private readonly IJwtAuthenticationManager jwtAuthenticationManager;
+        public CartItemController(dataContext context, IConfiguration configuration , IJwtAuthenticationManager jwtAuthenticationManager)
         {
+            this.jwtAuthenticationManager = jwtAuthenticationManager;
             _context = context;
             _configuration = configuration;
         }
